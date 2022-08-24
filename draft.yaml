@@ -1,0 +1,92 @@
+models:
+  Region:
+    name: string:400
+    content: nullable longtext
+    nb_circonscription: integer
+    relationships:
+      hasMany: Circonscription
+  Circonscription: 
+    name: string:400
+    city: string:400
+    content: nullable longtext
+    nb_secteur: integer
+    relationships:
+      belongsTo: Region
+      hasMany: Secteur
+  Secteur: 
+    name: string:400
+    city: string:400
+    content: nullable longtext
+    nb_localite: integer
+    relationships:
+      belongsTo: Circonscription
+      hasMany: Localite
+  Localite: 
+    name: string:400
+    city: string:400
+    content: nullable longtext
+    relationships:
+      belongsTo: Secteur
+      hasMany: Jeune
+  Jeune: 
+    firstname: string:400
+    lastname: string:400
+    city: string:400
+    fonction: enum:Jeune,President,Secretaire,Vice-president,Tresorier,Animateur,Conseiller
+    is_married: boolean default(false)
+    is_water_baptism: boolean default(false)
+    is_spirit_baptism: boolean default(false)
+    birthday: date
+    date_water_baptism: date
+    date_spirit_baptism: date
+    sexe: enum:Masculin,Feminin
+    belongsTo: Localite
+
+  File:
+    name: string:400
+    path: string:400
+    rooth_path: string:400
+    type: string:400
+    relationships:
+      belongsTo: Image_gallery
+  Image_gallery: 
+    relationships:
+      hasMany: File
+  User:
+    relationships:
+      hasMany: Post
+  Post:
+    title: string:400
+    content: longtext
+    video_link: nullable string:400
+    image_gallery_id: id:Image_gallery
+    published_at: nullable timestamp
+    type: enum:article,temoignage,evenement
+    views: integer
+    like: integer
+    favorite: integer
+    relationships:
+      hasMany: Comment
+      hasOne: Image_gallery
+      belongsTo: User
+  Comment:
+    content: longtext
+    published_at: nullable timestamp
+seeders: Post, Comment
+controllers:
+  Post:
+    resource: web
+  Comment:
+    resource: web
+  Region:
+    resource: web
+  Circonscription:
+    resource: web
+  Secteur:
+    resource: web
+  Localite:
+    resource: web
+  Jeune:
+    resource: all
+  Image_gallery:
+    resource: all

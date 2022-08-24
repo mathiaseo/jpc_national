@@ -1,0 +1,98 @@
+created:
+    - app/Http/Controllers/PostController.php
+    - app/Http/Controllers/CommentController.php
+    - app/Http/Controllers/RegionController.php
+    - app/Http/Controllers/CirconscriptionController.php
+    - app/Http/Controllers/SecteurController.php
+    - app/Http/Controllers/LocaliteController.php
+    - app/Http/Controllers/JeuneController.php
+    - app/Http/Controllers/Image_galleryController.php
+    - database/factories/RegionFactory.php
+    - database/factories/CirconscriptionFactory.php
+    - database/factories/SecteurFactory.php
+    - database/factories/LocaliteFactory.php
+    - database/factories/JeuneFactory.php
+    - database/factories/FileFactory.php
+    - database/factories/ImageGalleryFactory.php
+    - database/factories/UserFactory.php
+    - database/factories/PostFactory.php
+    - database/factories/CommentFactory.php
+    - database/migrations/2022_08_24_165256_create_regions_table.php
+    - database/migrations/2022_08_24_165257_create_circonscriptions_table.php
+    - database/migrations/2022_08_24_165258_create_secteurs_table.php
+    - database/migrations/2022_08_24_165259_create_localites_table.php
+    - database/migrations/2022_08_24_165300_create_jeunes_table.php
+    - database/migrations/2022_08_24_165301_create_files_table.php
+    - database/migrations/2022_08_24_165302_create_image_galleries_table.php
+    - database/migrations/2022_08_24_165303_create_users_table.php
+    - database/migrations/2022_08_24_165304_create_posts_table.php
+    - database/migrations/2022_08_24_165305_create_comments_table.php
+    - app/Models/Region.php
+    - app/Models/Circonscription.php
+    - app/Models/Secteur.php
+    - app/Models/Localite.php
+    - app/Models/Jeune.php
+    - app/Models/File.php
+    - app/Models/Image_gallery.php
+    - app/Models/User.php
+    - app/Models/Post.php
+    - app/Models/Comment.php
+    - database/seeders/PostSeeder.php
+    - database/seeders/CommentSeeder.php
+    - tests/Feature/Http/Controllers/PostControllerTest.php
+    - tests/Feature/Http/Controllers/CommentControllerTest.php
+    - tests/Feature/Http/Controllers/RegionControllerTest.php
+    - tests/Feature/Http/Controllers/CirconscriptionControllerTest.php
+    - tests/Feature/Http/Controllers/SecteurControllerTest.php
+    - tests/Feature/Http/Controllers/LocaliteControllerTest.php
+    - tests/Feature/Http/Controllers/JeuneControllerTest.php
+    - tests/Feature/Http/Controllers/Image_galleryControllerTest.php
+    - app/Http/Requests/PostStoreRequest.php
+    - app/Http/Requests/PostUpdateRequest.php
+    - app/Http/Requests/CommentStoreRequest.php
+    - app/Http/Requests/CommentUpdateRequest.php
+    - app/Http/Requests/RegionStoreRequest.php
+    - app/Http/Requests/RegionUpdateRequest.php
+    - app/Http/Requests/CirconscriptionStoreRequest.php
+    - app/Http/Requests/CirconscriptionUpdateRequest.php
+    - app/Http/Requests/SecteurStoreRequest.php
+    - app/Http/Requests/SecteurUpdateRequest.php
+    - app/Http/Requests/LocaliteStoreRequest.php
+    - app/Http/Requests/LocaliteUpdateRequest.php
+    - resources/views/post/index.blade.php
+    - resources/views/post/create.blade.php
+    - resources/views/post/show.blade.php
+    - resources/views/post/edit.blade.php
+    - resources/views/comment/index.blade.php
+    - resources/views/comment/create.blade.php
+    - resources/views/comment/show.blade.php
+    - resources/views/comment/edit.blade.php
+    - resources/views/region/index.blade.php
+    - resources/views/region/create.blade.php
+    - resources/views/region/show.blade.php
+    - resources/views/region/edit.blade.php
+    - resources/views/circonscription/index.blade.php
+    - resources/views/circonscription/create.blade.php
+    - resources/views/circonscription/show.blade.php
+    - resources/views/circonscription/edit.blade.php
+    - resources/views/secteur/index.blade.php
+    - resources/views/secteur/create.blade.php
+    - resources/views/secteur/show.blade.php
+    - resources/views/secteur/edit.blade.php
+    - resources/views/localite/index.blade.php
+    - resources/views/localite/create.blade.php
+    - resources/views/localite/show.blade.php
+    - resources/views/localite/edit.blade.php
+updated:
+    - routes/web.php
+models:
+    Region: { name: 'string:400', content: 'nullable longtext', nb_circonscription: integer, relationships: { hasMany: Circonscription } }
+    Circonscription: { name: 'string:400', city: 'string:400', content: 'nullable longtext', nb_secteur: integer, relationships: { belongsTo: Region, hasMany: Secteur } }
+    Secteur: { name: 'string:400', city: 'string:400', content: 'nullable longtext', nb_localite: integer, relationships: { belongsTo: Circonscription, hasMany: Localite } }
+    Localite: { name: 'string:400', city: 'string:400', content: 'nullable longtext', relationships: { belongsTo: Secteur, hasMany: Jeune } }
+    Jeune: { firstname: 'string:400', lastname: 'string:400', city: 'string:400', fonction: 'enum:Jeune,President,Secretaire,Vice-president,Tresorier,Animateur,Conseiller', is_married: 'boolean default(false)', is_water_baptism: 'boolean default(false)', is_spirit_baptism: 'boolean default(false)', birthday: date, date_water_baptism: date, date_spirit_baptism: date, sexe: 'enum:Masculin,Feminin', belongsTo: Localite }
+    File: { name: 'string:400', path: 'string:400', rooth_path: 'string:400', type: 'string:400', relationships: { belongsTo: Image_gallery } }
+    Image_gallery: { relationships: { hasMany: File } }
+    User: { relationships: { hasMany: Post } }
+    Post: { title: 'string:400', content: longtext, video_link: 'nullable string:400', image_gallery_id: 'id:Image_gallery', published_at: 'nullable timestamp', type: 'enum:article,temoignage,evenement', views: integer, like: integer, favorite: integer, relationships: { hasMany: Comment, hasOne: Image_gallery, belongsTo: User } }
+    Comment: { content: longtext, published_at: 'nullable timestamp' }
