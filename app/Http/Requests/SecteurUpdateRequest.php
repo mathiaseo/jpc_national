@@ -26,8 +26,9 @@ class SecteurUpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:400'],
             'city' => ['required', 'string', 'max:400'],
-            'content' => ['string'],
+            'description' => ['string'],
             'nb_localite' => ['required', 'integer'],
+            'circonscription_id' => ['required', 'integer', 'exists:Circonscriptions,id'],
         ];
     }
 }

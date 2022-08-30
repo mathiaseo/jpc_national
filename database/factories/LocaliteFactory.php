@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Localite;
+use App\Models\Secteur;
 
 class LocaliteFactory extends Factory
 {
@@ -25,7 +26,8 @@ class LocaliteFactory extends Factory
         return [
             'name' => $this->faker->name,
             'city' => $this->faker->city,
-            'content' => $this->faker->paragraphs(3, true),
+            'description' => $this->faker->text,
+            'secteur_id' => Secteur::factory(),
         ];
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\ImageGallery;
 use App\Models\Post;
+use App\Models\User;
 
 class PostFactory extends Factory
 {
@@ -33,6 +34,7 @@ class PostFactory extends Factory
             'views' => $this->faker->numberBetween(-10000, 10000),
             'like' => $this->faker->numberBetween(-10000, 10000),
             'favorite' => $this->faker->numberBetween(-10000, 10000),
+            'autor' => User::factory(),
         ];
     }
 }

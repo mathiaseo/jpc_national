@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Comment;
+use App\Models\Post;
 
 class CommentFactory extends Factory
 {
@@ -25,6 +26,7 @@ class CommentFactory extends Factory
         return [
             'content' => $this->faker->paragraphs(3, true),
             'published_at' => $this->faker->dateTime(),
+            'post_id' => Post::factory(),
         ];
     }
 }

@@ -26,7 +26,8 @@ class LocaliteStoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:400'],
             'city' => ['required', 'string', 'max:400'],
-            'content' => ['string'],
+            'description' => ['string'],
+            'secteur_id' => ['required', 'integer', 'exists:Secteurs,id'],
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Circonscription;
 use App\Models\Secteur;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -62,17 +63,20 @@ class SecteurControllerTest extends TestCase
         $name = $this->faker->name;
         $city = $this->faker->city;
         $nb_localite = $this->faker->numberBetween(-10000, 10000);
+        $circonscription = Circonscription::factory()->create();
 
         $response = $this->post(route('secteur.store'), [
             'name' => $name,
             'city' => $city,
             'nb_localite' => $nb_localite,
+            'circonscription_id' => $circonscription->id,
         ]);
 
         $secteurs = Secteur::query()
             ->where('name', $name)
             ->where('city', $city)
             ->where('nb_localite', $nb_localite)
+            ->where('circonscription_id', $circonscription->id)
             ->get();
         $this->assertCount(1, $secteurs);
         $secteur = $secteurs->first();
@@ -133,11 +137,13 @@ class SecteurControllerTest extends TestCase
         $name = $this->faker->name;
         $city = $this->faker->city;
         $nb_localite = $this->faker->numberBetween(-10000, 10000);
+        $circonscription = Circonscription::factory()->create();
 
         $response = $this->put(route('secteur.update', $secteur), [
             'name' => $name,
             'city' => $city,
             'nb_localite' => $nb_localite,
+            'circonscription_id' => $circonscription->id,
         ]);
 
         $secteur->refresh();
@@ -148,6 +154,7 @@ class SecteurControllerTest extends TestCase
         $this->assertEquals($name, $secteur->name);
         $this->assertEquals($city, $secteur->city);
         $this->assertEquals($nb_localite, $secteur->nb_localite);
+        $this->assertEquals($circonscription->id, $secteur->circonscription_id);
     }
 
 

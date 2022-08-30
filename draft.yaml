@@ -1,30 +1,33 @@
 models:
   Region:
     name: string:400
-    content: nullable longtext
+    description: nullable longtext
     nb_circonscription: integer
     relationships:
       hasMany: Circonscription
   Circonscription: 
     name: string:400
     city: string:400
-    content: nullable longtext
+    description: nullable longtext
     nb_secteur: integer
+    region_id: id:hasMany
     relationships:
       belongsTo: Region
       hasMany: Secteur
   Secteur: 
     name: string:400
     city: string:400
-    content: nullable longtext
+    description: nullable longtext
     nb_localite: integer
+    circonscription_id: id:Circonscription
     relationships:
       belongsTo: Circonscription
       hasMany: Localite
   Localite: 
     name: string:400
     city: string:400
-    content: nullable longtext
+    description: nullable longtext
+    secteur_id: id:Secteur
     relationships:
       belongsTo: Secteur
       hasMany: Jeune
@@ -40,7 +43,9 @@ models:
     date_water_baptism: date
     date_spirit_baptism: date
     sexe: enum:Masculin,Feminin
-    belongsTo: Localite
+    localite_id: id:Localite
+    relationships:
+      belongsTo: Localite
 
   File:
     name: string:400
@@ -65,6 +70,7 @@ models:
     views: integer
     like: integer
     favorite: integer
+    autor: id:User
     relationships:
       hasMany: Comment
       hasOne: Image_gallery
@@ -72,6 +78,10 @@ models:
   Comment:
     content: longtext
     published_at: nullable timestamp
+    post_id: id:Post
+    relationships:
+      belongsTo: Post
+    
 seeders: Post, Comment
 controllers:
   Post:
@@ -87,6 +97,6 @@ controllers:
   Localite:
     resource: web
   Jeune:
-    resource: all
+    resource: web
   Image_gallery:
-    resource: all
+    resource: web

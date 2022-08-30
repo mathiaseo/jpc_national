@@ -33,6 +33,7 @@ class PostUpdateRequest extends FormRequest
             'views' => ['required', 'integer'],
             'like' => ['required', 'integer'],
             'favorite' => ['required', 'integer'],
+            'autor' => ['required', 'integer', 'exists:Users,id'],
         ];
     }
 }

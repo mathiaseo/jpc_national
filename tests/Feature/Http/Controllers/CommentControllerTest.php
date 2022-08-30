@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use JMac\Testing\Traits\AdditionalAssertions;
@@ -60,13 +61,16 @@ class CommentControllerTest extends TestCase
     public function store_saves_and_redirects()
     {
         $content = $this->faker->paragraphs(3, true);
+        $post = Post::factory()->create();
 
         $response = $this->post(route('comment.store'), [
             'content' => $content,
+            'post_id' => $post->id,
         ]);
 
         $comments = Comment::query()
             ->where('content', $content)
+            ->where('post_id', $post->id)
             ->get();
         $this->assertCount(1, $comments);
         $comment = $comments->first();
@@ -125,9 +129,11 @@ class CommentControllerTest extends TestCase
     {
         $comment = Comment::factory()->create();
         $content = $this->faker->paragraphs(3, true);
+        $post = Post::factory()->create();
 
         $response = $this->put(route('comment.update', $comment), [
             'content' => $content,
+            'post_id' => $post->id,
         ]);
 
         $comment->refresh();
@@ -136,6 +142,7 @@ class CommentControllerTest extends TestCase
         $response->assertSessionHas('comment.id', $comment->id);
 
         $this->assertEquals($content, $comment->content);
+        $this->assertEquals($post->id, $comment->post_id);
     }
 
 

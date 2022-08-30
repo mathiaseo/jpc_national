@@ -26,7 +26,7 @@ class Jeune extends Model
         'date_water_baptism',
         'date_spirit_baptism',
         'sexe',
-        'belongsTo',
+        'localite_id',
     ];
 
     /**
@@ -42,5 +42,13 @@ class Jeune extends Model
         'birthday' => 'date',
         'date_water_baptism' => 'date',
         'date_spirit_baptism' => 'date',
+        'localite_id' => 'integer',
     ];
+
+    public function localite()
+    {
+        return $this->belongsTo(Localite::class);
+    }
+
+   
 }

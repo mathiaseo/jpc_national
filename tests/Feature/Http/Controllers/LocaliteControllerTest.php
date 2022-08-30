@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Localite;
+use App\Models\Secteur;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use JMac\Testing\Traits\AdditionalAssertions;
@@ -61,15 +62,18 @@ class LocaliteControllerTest extends TestCase
     {
         $name = $this->faker->name;
         $city = $this->faker->city;
+        $secteur = Secteur::factory()->create();
 
         $response = $this->post(route('localite.store'), [
             'name' => $name,
             'city' => $city,
+            'secteur_id' => $secteur->id,
         ]);
 
         $localites = Localite::query()
             ->where('name', $name)
             ->where('city', $city)
+            ->where('secteur_id', $secteur->id)
             ->get();
         $this->assertCount(1, $localites);
         $localite = $localites->first();
@@ -129,10 +133,12 @@ class LocaliteControllerTest extends TestCase
         $localite = Localite::factory()->create();
         $name = $this->faker->name;
         $city = $this->faker->city;
+        $secteur = Secteur::factory()->create();
 
         $response = $this->put(route('localite.update', $localite), [
             'name' => $name,
             'city' => $city,
+            'secteur_id' => $secteur->id,
         ]);
 
         $localite->refresh();
@@ -142,6 +148,7 @@ class LocaliteControllerTest extends TestCase
 
         $this->assertEquals($name, $localite->name);
         $this->assertEquals($city, $localite->city);
+        $this->assertEquals($secteur->id, $localite->secteur_id);
     }
 
 

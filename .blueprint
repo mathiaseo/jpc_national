@@ -17,16 +17,16 @@ created:
     - database/factories/UserFactory.php
     - database/factories/PostFactory.php
     - database/factories/CommentFactory.php
-    - database/migrations/2022_08_24_165256_create_regions_table.php
-    - database/migrations/2022_08_24_165257_create_circonscriptions_table.php
-    - database/migrations/2022_08_24_165258_create_secteurs_table.php
-    - database/migrations/2022_08_24_165259_create_localites_table.php
-    - database/migrations/2022_08_24_165300_create_jeunes_table.php
-    - database/migrations/2022_08_24_165301_create_files_table.php
-    - database/migrations/2022_08_24_165302_create_image_galleries_table.php
-    - database/migrations/2022_08_24_165303_create_users_table.php
-    - database/migrations/2022_08_24_165304_create_posts_table.php
-    - database/migrations/2022_08_24_165305_create_comments_table.php
+    - database/migrations/2022_08_27_044013_create_regions_table.php
+    - database/migrations/2022_08_27_044014_create_circonscriptions_table.php
+    - database/migrations/2022_08_27_044015_create_secteurs_table.php
+    - database/migrations/2022_08_27_044016_create_localites_table.php
+    - database/migrations/2022_08_27_044017_create_jeunes_table.php
+    - database/migrations/2022_08_27_044018_create_files_table.php
+    - database/migrations/2022_08_27_044019_create_image_galleries_table.php
+    - database/migrations/2022_08_27_044020_create_users_table.php
+    - database/migrations/2022_08_27_044021_create_posts_table.php
+    - database/migrations/2022_08_27_044022_create_comments_table.php
     - app/Models/Region.php
     - app/Models/Circonscription.php
     - app/Models/Secteur.php
@@ -59,6 +59,10 @@ created:
     - app/Http/Requests/SecteurUpdateRequest.php
     - app/Http/Requests/LocaliteStoreRequest.php
     - app/Http/Requests/LocaliteUpdateRequest.php
+    - app/Http/Requests/JeuneStoreRequest.php
+    - app/Http/Requests/JeuneUpdateRequest.php
+    - app/Http/Requests/Image_galleryStoreRequest.php
+    - app/Http/Requests/Image_galleryUpdateRequest.php
     - resources/views/post/index.blade.php
     - resources/views/post/create.blade.php
     - resources/views/post/show.blade.php
@@ -83,16 +87,24 @@ created:
     - resources/views/localite/create.blade.php
     - resources/views/localite/show.blade.php
     - resources/views/localite/edit.blade.php
+    - resources/views/jeune/index.blade.php
+    - resources/views/jeune/create.blade.php
+    - resources/views/jeune/show.blade.php
+    - resources/views/jeune/edit.blade.php
+    - resources/views/imageGallery/index.blade.php
+    - resources/views/imageGallery/create.blade.php
+    - resources/views/imageGallery/show.blade.php
+    - resources/views/imageGallery/edit.blade.php
 updated:
     - routes/web.php
 models:
-    Region: { name: 'string:400', content: 'nullable longtext', nb_circonscription: integer, relationships: { hasMany: Circonscription } }
-    Circonscription: { name: 'string:400', city: 'string:400', content: 'nullable longtext', nb_secteur: integer, relationships: { belongsTo: Region, hasMany: Secteur } }
-    Secteur: { name: 'string:400', city: 'string:400', content: 'nullable longtext', nb_localite: integer, relationships: { belongsTo: Circonscription, hasMany: Localite } }
-    Localite: { name: 'string:400', city: 'string:400', content: 'nullable longtext', relationships: { belongsTo: Secteur, hasMany: Jeune } }
-    Jeune: { firstname: 'string:400', lastname: 'string:400', city: 'string:400', fonction: 'enum:Jeune,President,Secretaire,Vice-president,Tresorier,Animateur,Conseiller', is_married: 'boolean default(false)', is_water_baptism: 'boolean default(false)', is_spirit_baptism: 'boolean default(false)', birthday: date, date_water_baptism: date, date_spirit_baptism: date, sexe: 'enum:Masculin,Feminin', belongsTo: Localite }
+    Region: { name: 'string:400', description: 'nullable longtext', nb_circonscription: integer, relationships: { hasMany: Circonscription } }
+    Circonscription: { name: 'string:400', city: 'string:400', description: 'nullable longtext', nb_secteur: integer, region_id: 'id:hasMany', relationships: { belongsTo: Region, hasMany: Secteur } }
+    Secteur: { name: 'string:400', city: 'string:400', description: 'nullable longtext', nb_localite: integer, circonscription_id: 'id:Circonscription', relationships: { belongsTo: Circonscription, hasMany: Localite } }
+    Localite: { name: 'string:400', city: 'string:400', description: 'nullable longtext', secteur_id: 'id:Secteur', relationships: { belongsTo: Secteur, hasMany: Jeune } }
+    Jeune: { firstname: 'string:400', lastname: 'string:400', city: 'string:400', fonction: 'enum:Jeune,President,Secretaire,Vice-president,Tresorier,Animateur,Conseiller', is_married: 'boolean default(false)', is_water_baptism: 'boolean default(false)', is_spirit_baptism: 'boolean default(false)', birthday: date, date_water_baptism: date, date_spirit_baptism: date, sexe: 'enum:Masculin,Feminin', localite_id: 'id:Localite', relationships: { belongsTo: Localite } }
     File: { name: 'string:400', path: 'string:400', rooth_path: 'string:400', type: 'string:400', relationships: { belongsTo: Image_gallery } }
     Image_gallery: { relationships: { hasMany: File } }
     User: { relationships: { hasMany: Post } }
-    Post: { title: 'string:400', content: longtext, video_link: 'nullable string:400', image_gallery_id: 'id:Image_gallery', published_at: 'nullable timestamp', type: 'enum:article,temoignage,evenement', views: integer, like: integer, favorite: integer, relationships: { hasMany: Comment, hasOne: Image_gallery, belongsTo: User } }
-    Comment: { content: longtext, published_at: 'nullable timestamp' }
+    Post: { title: 'string:400', content: longtext, video_link: 'nullable string:400', image_gallery_id: 'id:Image_gallery', published_at: 'nullable timestamp', type: 'enum:article,temoignage,evenement', views: integer, like: integer, favorite: integer, autor: 'id:User', relationships: { hasMany: Comment, hasOne: Image_gallery, belongsTo: User } }
+    Comment: { content: longtext, published_at: 'nullable timestamp', post_id: 'id:Post', relationships: { belongsTo: Post } }

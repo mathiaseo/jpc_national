@@ -26,7 +26,7 @@ class CreateJeunesTable extends Migration
             $table->date('date_water_baptism');
             $table->date('date_spirit_baptism');
             $table->enum('sexe', ["Masculin","Feminin"]);
-            $table->string('belongsTo');
+            $table->unsignedBigInteger('localite_id');
             $table->timestamps();
         });
     }

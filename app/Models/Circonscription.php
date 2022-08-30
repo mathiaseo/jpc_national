@@ -17,8 +17,9 @@ class Circonscription extends Model
     protected $fillable = [
         'name',
         'city',
-        'content',
+        'description',
         'nb_secteur',
+        'region_id',
     ];
 
     /**
@@ -28,11 +29,17 @@ class Circonscription extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'region_id' => 'integer',
     ];
 
     public function region()
     {
         return $this->belongsTo(Region::class);
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(HasMany::class);
     }
 
     public function secteurs()

@@ -24,7 +24,7 @@ class RegionFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'content' => $this->faker->paragraphs(3, true),
+            'description' => $this->faker->text,
             'nb_circonscription' => $this->faker->numberBetween(-10000, 10000),
         ];
     }

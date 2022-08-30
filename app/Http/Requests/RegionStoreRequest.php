@@ -25,7 +25,7 @@ class RegionStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:400'],
-            'content' => ['string'],
+            'description' => ['string'],
             'nb_circonscription' => ['required', 'integer'],
         ];
     }

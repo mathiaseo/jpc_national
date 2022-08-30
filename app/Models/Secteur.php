@@ -17,8 +17,9 @@ class Secteur extends Model
     protected $fillable = [
         'name',
         'city',
-        'content',
+        'description',
         'nb_localite',
+        'circonscription_id',
     ];
 
     /**
@@ -28,12 +29,14 @@ class Secteur extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'circonscription_id' => 'integer',
     ];
 
     public function circonscription()
     {
         return $this->belongsTo(Circonscription::class);
     }
+
 
     public function localites()
     {

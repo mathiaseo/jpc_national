@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\ImageGallery;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use JMac\Testing\Traits\AdditionalAssertions;
@@ -67,6 +68,7 @@ class PostControllerTest extends TestCase
         $views = $this->faker->numberBetween(-10000, 10000);
         $like = $this->faker->numberBetween(-10000, 10000);
         $favorite = $this->faker->numberBetween(-10000, 10000);
+        $autor = User::factory()->create();
 
         $response = $this->post(route('post.store'), [
             'title' => $title,
@@ -76,6 +78,7 @@ class PostControllerTest extends TestCase
             'views' => $views,
             'like' => $like,
             'favorite' => $favorite,
+            'autor' => $autor->id,
         ]);
 
         $posts = Post::query()
@@ -86,6 +89,7 @@ class PostControllerTest extends TestCase
             ->where('views', $views)
             ->where('like', $like)
             ->where('favorite', $favorite)
+            ->where('autor', $autor->id)
             ->get();
         $this->assertCount(1, $posts);
         $post = $posts->first();
@@ -150,6 +154,7 @@ class PostControllerTest extends TestCase
         $views = $this->faker->numberBetween(-10000, 10000);
         $like = $this->faker->numberBetween(-10000, 10000);
         $favorite = $this->faker->numberBetween(-10000, 10000);
+        $autor = User::factory()->create();
 
         $response = $this->put(route('post.update', $post), [
             'title' => $title,
@@ -159,6 +164,7 @@ class PostControllerTest extends TestCase
             'views' => $views,
             'like' => $like,
             'favorite' => $favorite,
+            'autor' => $autor->id,
         ]);
 
         $post->refresh();
@@ -173,6 +179,7 @@ class PostControllerTest extends TestCase
         $this->assertEquals($views, $post->views);
         $this->assertEquals($like, $post->like);
         $this->assertEquals($favorite, $post->favorite);
+        $this->assertEquals($autor->id, $post->autor);
     }
 
 

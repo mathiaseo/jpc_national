@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSecteursTable extends Migration
+class CreateCirconscriptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateSecteursTable extends Migration
      */
     public function up()
     {
-        Schema::create('secteurs', function (Blueprint $table) {
+        Schema::create('circonscriptions', function (Blueprint $table) {
             $table->id();
             $table->string('name', 400);
             $table->string('city', 400);
-            $table->longText('content')->nullable();
-            $table->integer('nb_localite');
+            $table->longText('description')->nullable();
+            $table->integer('nb_secteur');
+            $table->unsignedBigInteger('region_id');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateSecteursTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('secteurs');
+        Schema::dropIfExists('circonscriptions');
     }
 }

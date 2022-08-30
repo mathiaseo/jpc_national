@@ -17,7 +17,8 @@ class CreateLocalitesTable extends Migration
             $table->id();
             $table->string('name', 400);
             $table->string('city', 400);
-            $table->longText('content')->nullable();
+            $table->longText('description')->nullable();
+            $table->unsignedBigInteger('secteur_id');
             $table->timestamps();
         });
     }

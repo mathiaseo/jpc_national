@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Jeune;
+use App\Models\Localite;
 
 class JeuneFactory extends Factory
 {
@@ -34,7 +35,7 @@ class JeuneFactory extends Factory
             'date_water_baptism' => $this->faker->date(),
             'date_spirit_baptism' => $this->faker->date(),
             'sexe' => $this->faker->randomElement(["Masculin","Feminin"]),
-            'belongsTo' => $this->faker->word,
+            'localite_id' => Localite::factory(),
         ];
     }
 }

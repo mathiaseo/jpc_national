@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\Circonscription;
 use App\Models\Secteur;
 
 class SecteurFactory extends Factory
@@ -25,8 +26,9 @@ class SecteurFactory extends Factory
         return [
             'name' => $this->faker->name,
             'city' => $this->faker->city,
-            'content' => $this->faker->paragraphs(3, true),
+            'description' => $this->faker->text,
             'nb_localite' => $this->faker->numberBetween(-10000, 10000),
+            'circonscription_id' => Circonscription::factory(),
         ];
     }
 }

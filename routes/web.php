@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DefaultController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,36 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Route::get('/', [DefaultController::class, 'index']);
 
 
 
@@ -64,6 +36,6 @@ Route::resource('secteur', App\Http\Controllers\SecteurController::class);
 
 Route::resource('localite', App\Http\Controllers\LocaliteController::class);
 
+Route::resource('jeune', App\Http\Controllers\JeuneController::class);
 
-
-
+Route::resource('image_gallery', App\Http\Controllers\Image_galleryController::class);

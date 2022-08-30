@@ -26,8 +26,9 @@ class CirconscriptionStoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:400'],
             'city' => ['required', 'string', 'max:400'],
-            'content' => ['string'],
+            'description' => ['string'],
             'nb_secteur' => ['required', 'integer'],
+            'region_id' => ['required', 'integer', 'exists:hasManies,id'],
         ];
     }
 }

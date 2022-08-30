@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LocaliteUpdateRequest extends FormRequest
+class Image_galleryUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,7 @@ class LocaliteUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:400'],
-            'city' => ['required', 'string', 'max:400'],
-            'description' => ['string'],
-            'secteur_id' => ['required', 'integer', 'exists:Secteurs,id'],
+            'imageGallery' => ['required'],
         ];
     }
 }

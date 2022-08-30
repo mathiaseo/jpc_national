@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Circonscription;
+use App\Models\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use JMac\Testing\Traits\AdditionalAssertions;
@@ -62,17 +63,20 @@ class CirconscriptionControllerTest extends TestCase
         $name = $this->faker->name;
         $city = $this->faker->city;
         $nb_secteur = $this->faker->numberBetween(-10000, 10000);
+        $region = HasMany::factory()->create();
 
         $response = $this->post(route('circonscription.store'), [
             'name' => $name,
             'city' => $city,
             'nb_secteur' => $nb_secteur,
+            'region_id' => $region->id,
         ]);
 
         $circonscriptions = Circonscription::query()
             ->where('name', $name)
             ->where('city', $city)
             ->where('nb_secteur', $nb_secteur)
+            ->where('region_id', $region->id)
             ->get();
         $this->assertCount(1, $circonscriptions);
         $circonscription = $circonscriptions->first();
@@ -133,11 +137,13 @@ class CirconscriptionControllerTest extends TestCase
         $name = $this->faker->name;
         $city = $this->faker->city;
         $nb_secteur = $this->faker->numberBetween(-10000, 10000);
+        $region = HasMany::factory()->create();
 
         $response = $this->put(route('circonscription.update', $circonscription), [
             'name' => $name,
             'city' => $city,
             'nb_secteur' => $nb_secteur,
+            'region_id' => $region->id,
         ]);
 
         $circonscription->refresh();
@@ -148,6 +154,7 @@ class CirconscriptionControllerTest extends TestCase
         $this->assertEquals($name, $circonscription->name);
         $this->assertEquals($city, $circonscription->city);
         $this->assertEquals($nb_secteur, $circonscription->nb_secteur);
+        $this->assertEquals($region->id, $circonscription->region_id);
     }
 
 

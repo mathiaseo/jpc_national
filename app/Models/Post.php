@@ -24,6 +24,7 @@ class Post extends Model
         'views',
         'like',
         'favorite',
+        'autor',
     ];
 
     /**
@@ -35,6 +36,7 @@ class Post extends Model
         'id' => 'integer',
         'image_gallery_id' => 'integer',
         'published_at' => 'timestamp',
+        'autor' => 'integer',
     ];
 
     public function comments()
@@ -52,8 +54,8 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function imageGallery()
+    public function autor()
     {
-        return $this->belongsTo(ImageGallery::class);
+        return $this->belongsTo(User::class);
     }
 }

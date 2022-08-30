@@ -17,7 +17,8 @@ class Localite extends Model
     protected $fillable = [
         'name',
         'city',
-        'content',
+        'description',
+        'secteur_id',
     ];
 
     /**
@@ -27,12 +28,15 @@ class Localite extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'secteur_id' => 'integer',
     ];
 
     public function secteur()
     {
         return $this->belongsTo(Secteur::class);
     }
+
+   
 
     public function jeunes()
     {

@@ -26,6 +26,7 @@ class CommentUpdateRequest extends FormRequest
         return [
             'content' => ['required', 'string'],
             'published_at' => [''],
+            'post_id' => ['required', 'integer', 'exists:Posts,id'],
         ];
     }
 }

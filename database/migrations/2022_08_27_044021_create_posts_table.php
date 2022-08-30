@@ -24,6 +24,7 @@ class CreatePostsTable extends Migration
             $table->integer('views');
             $table->integer('like');
             $table->integer('favorite');
+            $table->unsignedBigInteger('autor');
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ class Comment extends Model
     protected $fillable = [
         'content',
         'published_at',
+        'post_id',
     ];
 
     /**
@@ -27,5 +28,16 @@ class Comment extends Model
     protected $casts = [
         'id' => 'integer',
         'published_at' => 'timestamp',
+        'post_id' => 'integer',
     ];
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
 }
