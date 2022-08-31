@@ -14,14 +14,8 @@ use App\Http\Controllers\DefaultController;
 |
 */
 
-Route::get('/', [DefaultController::class, 'index']);
-
-
-
-
-
-
-
+Route::get('/', [DefaultController::class, 'accueil']);
+Route::get('/article', [DefaultController::class, 'article'])->name('article');
 
 
 Route::resource('post', App\Http\Controllers\PostController::class);

@@ -7,8 +7,14 @@ use Illuminate\Http\Request;
 
 class DefaultController extends Controller
 {
-    public function index(){
+    public function accueil()
+    {
 
-        return view('home.index');
+        return view('vitrine.index');
+    }
+
+    public function article()
+    {
+        return view('vitrine.article');
     }
 }
